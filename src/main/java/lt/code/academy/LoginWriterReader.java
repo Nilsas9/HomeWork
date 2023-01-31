@@ -8,12 +8,12 @@
 //import java.util.Map;
 //
 //public class LoginWriterReader {
-//    private static final String FILE_NAME = "test_answers.txt";
+//    private static final String FILE_NAME = "failo vardas";
 //
 //    Map<String, User> getUsers() throws IOException {
 //        ObjectMapper mapper = new ObjectMapper();
 //        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-//        File file = new File("test_answers.txt");
+//        File file = new File("failo pavadinimas");
 //        //file.createNewFile();
 //        return null;
 //

@@ -23,7 +23,7 @@ public class Main {
 //       // User user = new User(null, "Baltrunas", "andrius@codeacademy.lt", 35, List.of(new Address("Kaunas", "LT"), new Address("Vilnius", "LT")));
 //       // User secondUser = new User("Petras", "Petraitis", "petraitis@codeacademy.lt", 49, null);
 //
-//        File file = new File("users.json");
+//        File file = new File("json failas");
 //        if(!file.exists()) {
 //            file.createNewFile();
 //        }
