@@ -45,7 +45,7 @@ record User(
         return "User{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", testId=" + studentId +
+                ", studentId=" + studentId +
                 '}';
     }
 

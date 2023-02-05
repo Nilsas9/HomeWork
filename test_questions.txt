@@ -1,0 +1,52 @@
+Test ID: 33
+Test theme: "IT zinios"
+
+1. Kas yra JAVA?:
+a. Kava
+b. Programavimo kalba
+c. Abu atsakymai teisingi
+
+2. Ka veikia programuotojas darbe?:
+a. Visa diena geria kava
+b. Programuoja
+c. Miega
+
+3. Kam programuotojui reikalingas kompiuteris?:
+a. Kodo rasymui
+b. Filmu ziurejimui
+c. Kaip namu interjeras
+
+4. Ar programuotojas naudoja klaviatura kodo rasymui?:
+a. Taip
+b. Ne
+c. Nezinau kas yra klaviatura
+
+5. Ka naudoja paleista programa?:
+a. Kura
+b. Kompiuterio resursus
+c. Nieko nenaudoja
+
+6. Kas yra "Macintosh"?:
+a. Lagaminas
+b. Automobilio marke
+c. Personaliniu kompiuteriu serija
+
+7. Kuriuo klavisu galima "nufotografuoti" vaizda kompiuterio ekrane?:
+a. Insert
+b. Print Screen
+c. Scroll Lock
+
+8. Ant kurio klaviso yra "$" simbolis?:
+a. Ant "7"
+b. Ant "4"
+c. Ant "1"
+
+9. Kam reikalinas "NumLock" klavisas?:
+a. Ijungti kompiuteri
+b. Uzrakinti klaviatura
+c. Ijungti/isjungti skaiciu rasyma
+
+10. Kam reikalingas "CapsLock"?:
+a. Didziuju raidziu rasymo ijungimui
+b. Visiskam programos uzrakinimui
+c. Apsaugai nuo vaiku
