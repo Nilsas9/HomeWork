@@ -16,13 +16,13 @@ import java.util.List;
 record User(
         String name,
         String surname,
-        String testId
+        String studentId
 ) {
 
-    User(String name, String surname, String testId) {
+    User(String name, String surname, String studentId) {
         this.name = name;
         this.surname = surname;
-        this.testId = testId;
+        this.studentId = studentId;
     }
 
     @Override
@@ -36,8 +36,8 @@ record User(
     }
 
     @Override
-    public String testId() {
-        return testId;
+    public String studentId() {
+        return studentId;
     }
 
     @Override
@@ -45,7 +45,7 @@ record User(
         return "User{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", testId=" + testId +
+                ", testId=" + studentId +
                 '}';
     }
 

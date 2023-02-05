@@ -20,9 +20,9 @@ public class UserDeserializer extends StdDeserializer<User> {
 
         String userName = getValue(jsonNode, "userName");
         String userSurname = getValue(jsonNode, "userSurname");
-        String testId = getValue(jsonNode, "testId");
+        String studentId = getValue(jsonNode, "studentId");
 
-        return new User(userName, userSurname, testId);
+        return new User(userName, userSurname, studentId);
     }
 
     private String getValue(JsonNode jsonNode, String fieldName) {

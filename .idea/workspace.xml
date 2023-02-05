@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.2">
+    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.3">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/CustomUserSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/MethodsTester.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/LoginWriterReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/LoginWriterReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/UserDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/UserDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/UserSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/UserSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/users_test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +62,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CustomUserSerializer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lt.code.academy.CustomUserSerializer" />
+      <module name="HomeWorkTests" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lt.code.academy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lt.code.academy.Login" />
       <module name="HomeWorkTests" />
@@ -88,6 +104,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.AllInOne" />
+        <item itemvalue="Application.CustomUserSerializer" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Login" />
       </list>
@@ -120,7 +137,13 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1675168050498</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="Namu darbai testas v.3">
+      <created>1675181322282</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1675181322282</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,6 +187,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Namu darbai testas v.1" />
     <MESSAGE value="Namu darbai testas v.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.2" />
+    <MESSAGE value="Namu darbai testas v.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.3" />
   </component>
 </project>
