@@ -10,33 +10,28 @@ import java.util.*;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 
+
+
 public class AllInOne {
+    private final Map<String, User> users = new HashMap<>();
 
-    private static User userInput;
-    static AllInOne findStudent;
-    //  File file = new File("users_test.json");
-
-    public static void main(String[] args) throws FileNotFoundException {
-
-        //  Map<String, User> users;
-        AllInOne allInOne = new AllInOne();
+    public static void main(String[] args) {
+        AllInOne all = new AllInOne();
         Scanner sc = new Scanner(System.in);
-
 
         String line;
         do {
-            allInOne.menu();
+            all.menu();
             line = sc.nextLine();
-            userSelection(sc, line);
-        } while (!line.equals("3"));
+            all.userSelection(sc, line);
+        }   while (!line.equals("3"));
     }
 
-    public static void userSelection(Scanner sc, @NotNull String action) {
-        //  CustomUserSerializer serializationMethod = new CustomUserSerializer();
-
+    private void userSelection(Scanner sc, @NotNull String action) {
 
         switch (action) {
             case "1" -> {
@@ -50,40 +45,37 @@ public class AllInOne {
                 findStudent(sc);
             }
             case "3" -> {
-
-                //loginWriterReader.saveUsers(users);  //???????
-                System.out.println("Reikia irasyti duomenis!!!!");
                 System.out.println("Viso gero!");
             }
             default -> System.out.println("Pasirinkite reikiama meniu punkta!");
         }
     }
 
-    public static User userInput(Scanner scanner) throws IOException {
-        User user;
+    public void userInput (Scanner scanner) throws IOException {
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String testBeginTime = dataTime();
-
         File file = new File("users_test.json");
+
         if (!file.exists()) {
             file.createNewFile();
         }
 
         System.out.println("Iveskite studento ID");
         String studentId = scanner.nextLine();
-
         System.out.println("Iveskite varda:");
         String name = scanner.nextLine();
         System.out.println("Iveskite pavarde:");
         String surname = scanner.nextLine();
-        // user.put(studentId, new User(name, surname, studentId)); // reik salint
-        user = new User(name, surname, studentId);
 
-        mapper.writeValue(file, user);
+        users.put(studentId, new User(name, surname, studentId)); // TODO: 2023-02-06 patikrinti su users
 
+       // User users = new User(name, surname, studentId);
+        mapper.writeValue(file, users);
 
         System.out.printf("Sveiki %s %s, ar pasiruose pradeti testa? T/N %n", name, surname);
+        System.out.println(users);
 
         String choise = scanner.nextLine();
         if (choise.equals("T") || choise.equals("t")) {
@@ -91,19 +83,9 @@ public class AllInOne {
             // TODO: 2023-02-05   turiu ideti metoda testo sprendimui
         } else
             System.out.println("Blogas pasirinkimas");
-        return user;
-
-
-        // tikrinu ar tas pats testo ID
-
-//        if (studentId.equals("33")) {
-//            System.out.println("ivestis gera");
-//        } else
-//            System.out.println("Ivestis bloga");
-
     }
 
-    private static @NotNull String dataTime() {
+    private @NotNull String dataTime() {
         LocalDateTime testTime = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         String fd = testTime.format(dtf);
@@ -111,12 +93,7 @@ public class AllInOne {
         return fd;
     }
 
-//    public static void setUserInput(User userInput) {
-//        AllInOne.userInput = userInput;
-//    }
-
-
-    private void menu() {
+    public void menu() {
         System.out.println("""
                 [1]. Login (Prisijungti i testa)
                 [2]. Perziureti testo rezultatus
@@ -125,7 +102,7 @@ public class AllInOne {
     }
 
 
-    public static void printOut() throws IOException {
+    public void printOut() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -175,20 +152,22 @@ public class AllInOne {
         //       System.out.println(map.get("kitaPavarde"));
     }
 
-    public static void findStudent(@NotNull Scanner sc) {
-        AllInOne allInOne = new AllInOne();
-        //User user = new User(userInput.name(), userInput.surname(), userInput.studentId());
-
-
+    private void findStudent (@NotNull Scanner sc) {
         System.out.printf("Iveskite studento ID:%n");
-        String nr = sc.nextLine();
+        String id = sc.nextLine();
+        User user = users.get(id);  // TODO: 2023-02-06
 
-
-        if (nr.equals("33")) {
+        if (id.equals(user.studentId())) {
+            try {
+                printOut();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             System.out.printf("Tvarka, leidziu atidaryt faila%n");
 
         } else
-            System.out.printf("Tokio studento pagal paduota id: %s nera! %n%n", nr);
+            System.out.printf("Tokio studento pagal paduota id: %s nera! %n%n", id);
+
     }
 }
 

@@ -13,16 +13,20 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-record User(
+public record User(
         String name,
         String surname,
         String studentId
 ) {
 
-    User(String name, String surname, String studentId) {
-        this.name = name;
-        this.surname = surname;
-        this.studentId = studentId;
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return false;
     }
 
     @Override
