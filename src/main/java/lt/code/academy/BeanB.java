@@ -1,4 +1,4 @@
-package lt.code.academy.json;
+package lt.code.academy;
 
 public class BeanB {
     private int id;
@@ -29,4 +29,6 @@ public class BeanB {
         this.mar = mar;
     }
 
+    public static record TestIdAndTime() {
+    }
 }

@@ -19,7 +19,7 @@ public class CustomUserSerializer {
 
         objectMapper.registerModule(module);
 
-        User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
+       // User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
         String json = objectMapper.writeValueAsString(file);
 
 

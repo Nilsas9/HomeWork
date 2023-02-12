@@ -1,5 +1,5 @@
-Test ID: 33
-Test theme: "IT zinios"
+ID: 33
+Tema: "IT zinios"
 
 1. Kas yra JAVA?:
 a. Kava

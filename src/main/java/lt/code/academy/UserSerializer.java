@@ -17,8 +17,8 @@ public class UserSerializer extends StdSerializer<User> {
             throws IOException {
         jsonGenerator.writeStartObject();
 
-        jsonGenerator.writeStringField("userName", user.name());
-        jsonGenerator.writeStringField("userSurname", user.surname());
+        jsonGenerator.writeStringField("name", user.name());
+        jsonGenerator.writeStringField("surname", user.surname());
         jsonGenerator.writeStringField("studentId", user.studentId());
 
         jsonGenerator.writeEndObject();

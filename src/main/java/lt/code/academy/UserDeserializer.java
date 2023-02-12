@@ -18,11 +18,11 @@ public class UserDeserializer extends StdDeserializer<User> {
             throws IOException, JacksonException {
         JsonNode jsonNode = jsonParser.getCodec().readTree(jsonParser);
 
-        String userName = getValue(jsonNode, "userName");
-        String userSurname = getValue(jsonNode, "userSurname");
+        String name = getValue(jsonNode, "name");
+        String surname = getValue(jsonNode, "surname");
         String studentId = getValue(jsonNode, "studentId");
 
-        return new User(userName, userSurname, studentId);
+        return new User(name, surname, studentId);
     }
 
     private String getValue(JsonNode jsonNode, String fieldName) {

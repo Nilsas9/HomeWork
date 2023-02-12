@@ -13,11 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public record User(
-        String name,
-        String surname,
-        String studentId
-) {
+record User(String name, String surname, String studentId)  {
 
     @Override
     public int hashCode() {

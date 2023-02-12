@@ -3,35 +3,23 @@ package lt.code.academy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.jetbrains.annotations.NotNull;
 
-import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 
 
-
 public class AllInOne {
-    private final Map<String, User> users = new HashMap<>();
 
-    public static void main(String[] args) {
-        AllInOne all = new AllInOne();
-        Scanner sc = new Scanner(System.in);
 
-        String line;
-        do {
-            all.menu();
-            line = sc.nextLine();
-            all.userSelection(sc, line);
-        }   while (!line.equals("3"));
-    }
-
-    private void userSelection(Scanner sc, @NotNull String action) {
+    public void userSelection(Scanner sc, @NotNull String action) {
 
         switch (action) {
             case "1" -> {
@@ -42,47 +30,124 @@ public class AllInOne {
                 }
             }
             case "2" -> {
-                findStudent(sc);
+              // usersWriter();
+               findStudent(sc);
             }
             case "3" -> {
+               // usersWriter();
                 System.out.println("Viso gero!");
+
             }
             default -> System.out.println("Pasirinkite reikiama meniu punkta!");
         }
     }
 
-    public void userInput (Scanner scanner) throws IOException {
+    private final Map<String, User> users = new HashMap<>();
+    private final File file = new File("users_test.json");
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+    public void userInput(Scanner scanner) throws IOException {
+
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // File file = new File("users_test.json");
         String testBeginTime = dataTime();
-        File file = new File("users_test.json");
 
-        if (!file.exists()) {
+        if (!file.exists()) {     //todo surasti su try ir catch
             file.createNewFile();
+            return;
         }
 
         System.out.println("Iveskite studento ID");
         String studentId = scanner.nextLine();
+
+        //todo cia reikia padaryt, kad negaletu tas pats jungtis
+
         System.out.println("Iveskite varda:");
         String name = scanner.nextLine();
         System.out.println("Iveskite pavarde:");
         String surname = scanner.nextLine();
 
-        users.put(studentId, new User(name, surname, studentId)); // TODO: 2023-02-06 patikrinti su users
+        // TODO: 2023-02-06 patikrinti su users
 
-       // User users = new User(name, surname, studentId);
-        mapper.writeValue(file, users);
+      // User user = new User(name, surname, studentId);
 
-        System.out.printf("Sveiki %s %s, ar pasiruose pradeti testa? T/N %n", name, surname);
-        System.out.println(users);
+        System.out.printf("Sveiki, %s %s, ar pasiruose pradeti testa? T/N %n", name, surname);
+
 
         String choise = scanner.nextLine();
         if (choise.equals("T") || choise.equals("t")) {
-            System.out.printf("Saunu, pradedam testa:%n Sprendimo pradzios laikas: %s %n", testBeginTime);
-            // TODO: 2023-02-05   turiu ideti metoda testo sprendimui
-        } else
-            System.out.println("Blogas pasirinkimas");
+
+            System.out.printf("Saunu, pradedam testa:%nSprendimo pradzios laikas: %s %n", testBeginTime);
+            users.put("Test time: " + testBeginTime, new User(name, surname, studentId));
+
+
+
+            readLinesFromFile();// TODO: 2023-02-05   turiu ideti metoda testo sprendimui
+            usersWriter();
+
+        } else if ((choise.equals("N") || choise.equals("n"))) {
+            System.out.println("Tada dar pasimokykite");
+
+        } else System.out.println("blogas pasirinkimas");
+
+    }
+
+    private void readLinesFromFile() throws NoSuchElementException {
+        Scanner scanner = new Scanner(System.in);
+
+        int rez = 0;
+
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader("test_questions.txt"))) {
+
+            String testID = br.readLine();
+            System.out.println(testID);
+            String testName = br.readLine();
+            System.out.println(testName);
+            br.readLine();
+            System.out.printf("%nPradekime:%n");
+            int n = 1;
+
+            for (int i = 0; i < n; i++)
+
+                do {
+                    line = br.readLine();
+                    System.out.println(line);
+                    line = br.readLine();
+                    System.out.println(line);
+                    line = br.readLine();
+                    System.out.println(line);
+                    line = br.readLine();
+                    System.out.println(line);
+                    System.out.println("Iveskite atsakyma:");
+                    String answer = scanner.nextLine();
+
+                    if (answer.equals("a")) {  //todo / cia reikia metodo lyginimui input
+                                                // todo / reiksmiu su reiksmem is kito failo
+                        System.out.println("volia");
+                        rez++;
+                    }
+                } while (br.readLine() != null);
+        } catch (IOException e) {
+            System.out.println("Klaida eiluciu nuskaityme");
+        }
+        System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n", rez);
+    }
+
+
+    public void usersWriter() { //darasiau
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writeValue(file, users);
+            System.out.println(users);   // sitas atspausdina eilute su uzpildytu useriu
+            System.out.println("---------Ivyko irasymas userio-------");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private @NotNull String dataTime() {
@@ -93,36 +158,27 @@ public class AllInOne {
         return fd;
     }
 
-    public void menu() {
-        System.out.println("""
-                [1]. Login (Prisijungti i testa)
-                [2]. Perziureti testo rezultatus
-                [3]. Iseiti
-                """);
-    }
-
 
     public void printOut() throws IOException {
+        serializationMethod();
         ObjectMapper mapper = new ObjectMapper();
-
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        File file = new File("users_test.json");
+
+        //--------
+       // File file = new File("users_test.json");
 
         User readValue = mapper.readValue(file, User.class);
         String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
 
         System.out.println(stringUser);
+        System.out.println(mapper);
 
-//        System.out.println("Iveskite studento ID");
-//        String compareStudentId = sc.nextLine();
-//
-//        if (compareStudentId.equals()) {
-//            System.out.println("ivestis gera");
-//
-//        } else
-//            System.out.println("Ivestis bloga");
+        //-------
 
+
+//        User deserializedUser = mapper.readValue(file, User.class); //todo rodo kad nulas
+//        System.out.println(deserializedUser);
 
         //  User user = new User("1", "2","444444");
         //  User secondUser = new User("Petras", "Petraitis", "petraitis@codeacademy.lt");
@@ -152,14 +208,19 @@ public class AllInOne {
         //       System.out.println(map.get("kitaPavarde"));
     }
 
-    private void findStudent (@NotNull Scanner sc) {
+    private void findStudent(Scanner sc) throws NullPointerException {
+
+//        System.out.printf("Iveskite testo ID:%n");
+//        String tId = sc.nextLine();
         System.out.printf("Iveskite studento ID:%n");
         String id = sc.nextLine();
-        User user = users.get(id);  // TODO: 2023-02-06
+        User us = users.get(id);  // TODO: 2023-02-06
 
-        if (id.equals(user.studentId())) {
+        if (id.equals("33")) {   // todo reikia daryt
             try {
-                printOut();
+              // serializationMethod();
+               printOut();
+                System.out.println("blablabla");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -168,6 +229,33 @@ public class AllInOne {
         } else
             System.out.printf("Tokio studento pagal paduota id: %s nera! %n%n", id);
 
+    }
+
+    public void serializationMethod() throws IOException {
+      //  usersWriter();  // salinti jei nepapildys duomenu jaujais useriais
+        ObjectMapper objectMapper = new ObjectMapper();
+      //  ObjectMapper mapper = new ObjectMapper();
+     //   File file = new File("users_test.json");
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(User.class, new UserSerializer());
+        module.addDeserializer(User.class, new UserDeserializer());
+
+        objectMapper.registerModule(module);
+
+     //   User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
+        String json = objectMapper.writeValueAsString(file);
+
+
+        System.out.println("Json ->>>>>" + json);
+        System.out.println("Spausdinu faila:   " + file);
+//
+//        User deserializedUser = objectMapper.readValue(json, User.class);
+//        System.out.println(deserializedUser);
+
+//        User readValue = mapper.readValue(file, User.class);
+//        String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
+//
+//        System.out.println(stringUser);
     }
 }
 
