@@ -1,5 +1,7 @@
 package lt.code.academy;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -30,11 +32,13 @@ public class AllInOne {
                 }
             }
             case "2" -> {
-              // usersWriter();
-               findStudent(sc);
+                // usersWriter();
+                //findStudent(sc);
+                // System.out.println("Jusu atsakymai: " + studentAnswers);
+                readLinesFromAnswersFile();
             }
             case "3" -> {
-               // usersWriter();
+                // usersWriter();
                 System.out.println("Viso gero!");
 
             }
@@ -43,6 +47,10 @@ public class AllInOne {
     }
 
     private final Map<String, User> users = new HashMap<>();
+
+    private final ArrayList<String> studentAnswers = new ArrayList<>();
+
+    private final ArrayList<String> trueAnswers = new ArrayList<>();
     private final File file = new File("users_test.json");
 
 
@@ -71,7 +79,7 @@ public class AllInOne {
 
         // TODO: 2023-02-06 patikrinti su users
 
-      // User user = new User(name, surname, studentId);
+        // User user = new User(name, surname, studentId);
 
         System.out.printf("Sveiki, %s %s, ar pasiruose pradeti testa? T/N %n", name, surname);
 
@@ -83,8 +91,7 @@ public class AllInOne {
             users.put("Test time: " + testBeginTime, new User(name, surname, studentId));
 
 
-
-            readLinesFromFile();// TODO: 2023-02-05   turiu ideti metoda testo sprendimui
+            readLinesFromQuestionFile();// TODO: 2023-02-05   turiu ideti metoda testo sprendimui
             usersWriter();
 
         } else if ((choise.equals("N") || choise.equals("n"))) {
@@ -94,21 +101,24 @@ public class AllInOne {
 
     }
 
-    private void readLinesFromFile() throws NoSuchElementException {
+    public void readLinesFromQuestionFile() throws NoSuchElementException {
         Scanner scanner = new Scanner(System.in);
 
         int rez = 0;
+
 
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader("test_questions.txt"))) {
 
             String testID = br.readLine();
             System.out.println(testID);
+
             String testName = br.readLine();
             System.out.println(testName);
             br.readLine();
             System.out.printf("%nPradekime:%n");
             int n = 1;
+            int numb = 1;
 
             for (int i = 0; i < n; i++)
 
@@ -121,27 +131,66 @@ public class AllInOne {
                     System.out.println(line);
                     line = br.readLine();
                     System.out.println(line);
-                    System.out.println("Iveskite atsakyma:");
-                    String answer = scanner.nextLine();
+                    System.out.println("Pasirinkite atsakyma: 'a', 'b' arba 'c'");
 
-                    if (answer.equals("a")) {  //todo / cia reikia metodo lyginimui input
-                                                // todo / reiksmiu su reiksmem is kito failo
-                        System.out.println("volia");
-                        rez++;
-                    }
+                    studentAnswers.add(numb++ + scanner.nextLine());
+                    rez++;
+
+                    // todo / cia reikia metodo lyginimui input
+                    // todo / reiksmiu su reiksmem is kito failo
+                    //  System.out.println("Pasirinkite varianta ");
+                    //numb++;
+                    // skaiciuoti reikia kito metodo
+
+
                 } while (br.readLine() != null);
+
+
         } catch (IOException e) {
             System.out.println("Klaida eiluciu nuskaityme");
         }
+
+        System.out.println(studentAnswers);
         System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n", rez);
+
+    }
+    public void readLinesFromAnswersFile (){
+
+        try (BufferedReader br = new BufferedReader(new FileReader("test_answers.txt"))) {
+            String line;
+            String testID = br.readLine();
+            System.out.println(testID);
+            String testName = br.readLine();
+            System.out.println(testName);
+            br.readLine();
+
+            while((line =  br.readLine()) != null) {
+                trueAnswers.add(line);
+            }
+
+    } catch (IOException e) {
+        System.out.println("Klaida eiluciu nuskaityme");
     }
 
+        System.out.println("Teisingi atsakymai: " + trueAnswers);
+      //  trueAnswers.retainAll(studentAnswers);
+
+    }
+    //todo cia lyginimui listu
+//for(Friend f: p.friendList)
+//{
+//   if(q.friendList.contains(f))
+//   {
+//      counter++;
+//   }
+//}
 
     public void usersWriter() { //darasiau
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(file, users);
+
             System.out.println(users);   // sitas atspausdina eilute su uzpildytu useriu
             System.out.println("---------Ivyko irasymas userio-------");
 
@@ -161,12 +210,13 @@ public class AllInOne {
 
     public void printOut() throws IOException {
         serializationMethod();
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 
         //--------
-       // File file = new File("users_test.json");
+        // File file = new File("users_test.json");
 
         User readValue = mapper.readValue(file, User.class);
         String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
@@ -218,8 +268,8 @@ public class AllInOne {
 
         if (id.equals("33")) {   // todo reikia daryt
             try {
-              // serializationMethod();
-               printOut();
+                // serializationMethod();
+                printOut();
                 System.out.println("blablabla");
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -232,17 +282,17 @@ public class AllInOne {
     }
 
     public void serializationMethod() throws IOException {
-      //  usersWriter();  // salinti jei nepapildys duomenu jaujais useriais
+        //  usersWriter();  // salinti jei nepapildys duomenu jaujais useriais
         ObjectMapper objectMapper = new ObjectMapper();
-      //  ObjectMapper mapper = new ObjectMapper();
-     //   File file = new File("users_test.json");
+        //  ObjectMapper mapper = new ObjectMapper();
+        //   File file = new File("users_test.json");
         SimpleModule module = new SimpleModule();
         module.addSerializer(User.class, new UserSerializer());
         module.addDeserializer(User.class, new UserDeserializer());
 
         objectMapper.registerModule(module);
 
-     //   User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
+        //   User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
         String json = objectMapper.writeValueAsString(file);
 
 

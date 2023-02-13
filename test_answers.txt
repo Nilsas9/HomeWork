@@ -1,13 +1,13 @@
-Test ID: 33
-Test theme: "IT zinios"
+ID: 33
+Tema: "IT zinios"
 
-c
-b
-a
-a
-b
-c
-b
-b
-c
-a
+1c
+2b
+3a
+4a
+5b
+6c
+7b
+8b
+9c
+10a
