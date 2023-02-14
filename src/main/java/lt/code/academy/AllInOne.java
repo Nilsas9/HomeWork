@@ -1,7 +1,5 @@
 package lt.code.academy;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -17,9 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
-
 public class AllInOne {
-
+    private int numb = 1;
 
     public void userSelection(Scanner sc, @NotNull String action) {
 
@@ -35,7 +32,7 @@ public class AllInOne {
                 // usersWriter();
                 //findStudent(sc);
                 // System.out.println("Jusu atsakymai: " + studentAnswers);
-                readLinesFromAnswersFile();
+
             }
             case "3" -> {
                 // usersWriter();
@@ -47,25 +44,21 @@ public class AllInOne {
     }
 
     private final Map<String, User> users = new HashMap<>();
-
     private final ArrayList<String> studentAnswers = new ArrayList<>();
-
     private final ArrayList<String> trueAnswers = new ArrayList<>();
     private final File file = new File("users_test.json");
 
 
     public void userInput(Scanner scanner) throws IOException {
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        // File file = new File("users_test.json");
-        String testBeginTime = dataTime();
-
-        if (!file.exists()) {     //todo surasti su try ir catch
-            file.createNewFile();
-            return;
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Negaliu sukurti failo " + e.getMessage());
+            }
         }
+        String testBeginTime = dataTime();
 
         System.out.println("Iveskite studento ID");
         String studentId = scanner.nextLine();
@@ -77,10 +70,6 @@ public class AllInOne {
         System.out.println("Iveskite pavarde:");
         String surname = scanner.nextLine();
 
-        // TODO: 2023-02-06 patikrinti su users
-
-        // User user = new User(name, surname, studentId);
-
         System.out.printf("Sveiki, %s %s, ar pasiruose pradeti testa? T/N %n", name, surname);
 
 
@@ -90,8 +79,7 @@ public class AllInOne {
             System.out.printf("Saunu, pradedam testa:%nSprendimo pradzios laikas: %s %n", testBeginTime);
             users.put("Test time: " + testBeginTime, new User(name, surname, studentId));
 
-
-            readLinesFromQuestionFile();// TODO: 2023-02-05   turiu ideti metoda testo sprendimui
+            readLinesFromQuestionFile();
             usersWriter();
 
         } else if ((choise.equals("N") || choise.equals("n"))) {
@@ -103,25 +91,20 @@ public class AllInOne {
 
     public void readLinesFromQuestionFile() throws NoSuchElementException {
         Scanner scanner = new Scanner(System.in);
-
-        int rez = 0;
-
-
         String line;
+
+
         try (BufferedReader br = new BufferedReader(new FileReader("test_questions.txt"))) {
 
             String testID = br.readLine();
             System.out.println(testID);
-
             String testName = br.readLine();
             System.out.println(testName);
             br.readLine();
             System.out.printf("%nPradekime:%n");
+
             int n = 1;
-            int numb = 1;
-
             for (int i = 0; i < n; i++)
-
                 do {
                     line = br.readLine();
                     System.out.println(line);
@@ -133,59 +116,79 @@ public class AllInOne {
                     System.out.println(line);
                     System.out.println("Pasirinkite atsakyma: 'a', 'b' arba 'c'");
 
-                    studentAnswers.add(numb++ + scanner.nextLine());
-                    rez++;
-
-                    // todo / cia reikia metodo lyginimui input
-                    // todo / reiksmiu su reiksmem is kito failo
-                    //  System.out.println("Pasirinkite varianta ");
-                    //numb++;
-                    // skaiciuoti reikia kito metodo
+                    getCorrectUserAnswer(scanner);
 
 
                 } while (br.readLine() != null);
 
-
         } catch (IOException e) {
             System.out.println("Klaida eiluciu nuskaityme");
         }
-
         System.out.println(studentAnswers);
-        System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n", rez);
 
+        testResult();
+        //System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n");
     }
-    public void readLinesFromAnswersFile (){
+
+    private void getCorrectUserAnswer(@NotNull Scanner sc) {
+
+        while (true) {
+            try {
+                String input = sc.next();
+                if (input.equals("a") || input.equals("b") || input.equals("c")) {
+                    studentAnswers.add(numb++ + input);
+                    return;
+                }
+                System.out.println("Iveskite pateikta varianta");
+                sc.nextLine();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+
+    public void readLinesFromAnswersFile() {
 
         try (BufferedReader br = new BufferedReader(new FileReader("test_answers.txt"))) {
             String line;
+
             String testID = br.readLine();
             System.out.println(testID);
             String testName = br.readLine();
             System.out.println(testName);
             br.readLine();
 
-            while((line =  br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 trueAnswers.add(line);
             }
 
-    } catch (IOException e) {
-        System.out.println("Klaida eiluciu nuskaityme");
-    }
+        } catch (IOException e) {
+            System.out.println("Klaida eiluciu nuskaityme: " + e);
+        }
 
         System.out.println("Teisingi atsakymai: " + trueAnswers);
-      //  trueAnswers.retainAll(studentAnswers);
+
 
     }
-    //todo cia lyginimui listu
-//for(Friend f: p.friendList)
-//{
-//   if(q.friendList.contains(f))
-//   {
-//      counter++;
-//   }
-//}
 
-    public void usersWriter() { //darasiau
+    private void testResult() {
+        readLinesFromAnswersFile();
+        String[] array1 = studentAnswers.toArray(new String[0]);
+        String[] array2 = trueAnswers.toArray(new String[0]);
+        int count = 0;
+        for (int i = 0; i < array1.length; i++) {
+            if (array1[i].equals(array2[i])) {
+                count += 1;
+            }
+        }
+        System.out.println("Jusu testo ivertinimas: " + count);
+
+    }
+
+    public void usersWriter() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -206,7 +209,6 @@ public class AllInOne {
         System.out.println(fd);
         return fd;
     }
-
 
     public void printOut() throws IOException {
         serializationMethod();

@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.6 judam">
+    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.6 judam dar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/ReadLinesFromFile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_answers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test_answers.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/users_test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +182,13 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1676232738965</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="Namu darbai testas v.6 judam dar">
+      <created>1676250279247</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1676250279247</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,7 +237,8 @@
     <MESSAGE value="Namu darbai testas v.5 pilnas briedas..." />
     <MESSAGE value="Namu darbai testas v.6 judam i prieki" />
     <MESSAGE value="Namu darbai testas v.6 judam" />
-    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.6 judam" />
+    <MESSAGE value="Namu darbai testas v.6 judam dar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.6 judam dar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -241,6 +246,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="3" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
