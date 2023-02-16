@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -14,16 +16,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 record User(String name, String surname, String studentId)  {
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
 
     @Override
     public String name() {
@@ -40,8 +32,10 @@ record User(String name, String surname, String studentId)  {
         return studentId;
     }
 
+    @Contract(pure = true)
+
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "User{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +

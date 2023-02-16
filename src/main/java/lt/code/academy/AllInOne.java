@@ -1,5 +1,6 @@
 package lt.code.academy;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -17,8 +18,12 @@ import java.io.IOException;
 
 public class AllInOne {
     private int numb = 1;
+    private final Map<String, User> users = new HashMap<>();
+    private final ArrayList<String> studentAnswers = new ArrayList<>();
+    private final ArrayList<String> trueAnswers = new ArrayList<>();
+    private final File file = new File("users_test.json");
 
-    public void userSelection(Scanner sc, @NotNull String action) {
+    public void userSelection(Scanner sc, @NotNull String action) throws IOException {
 
         switch (action) {
             case "1" -> {
@@ -29,6 +34,8 @@ public class AllInOne {
                 }
             }
             case "2" -> {
+                printOut();
+                //serializationMethod();
                 // usersWriter();
                 //findStudent(sc);
                 // System.out.println("Jusu atsakymai: " + studentAnswers);
@@ -43,13 +50,10 @@ public class AllInOne {
         }
     }
 
-    private final Map<String, User> users = new HashMap<>();
-    private final ArrayList<String> studentAnswers = new ArrayList<>();
-    private final ArrayList<String> trueAnswers = new ArrayList<>();
-    private final File file = new File("users_test.json");
 
 
-    public void userInput(Scanner scanner) throws IOException {
+
+    public Object userInput(Scanner scanner) throws IOException {
 
         if (!file.exists()) {
             try {
@@ -77,6 +81,8 @@ public class AllInOne {
         if (choise.equals("T") || choise.equals("t")) {
 
             System.out.printf("Saunu, pradedam testa:%nSprendimo pradzios laikas: %s %n", testBeginTime);
+
+
             users.put("Test time: " + testBeginTime, new User(name, surname, studentId));
 
             readLinesFromQuestionFile();
@@ -87,6 +93,7 @@ public class AllInOne {
 
         } else System.out.println("blogas pasirinkimas");
 
+        return users;  // todo cia pakeiciau is null i users
     }
 
     public void readLinesFromQuestionFile() throws NoSuchElementException {
@@ -128,17 +135,24 @@ public class AllInOne {
 
         testResult();
         //System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n");
+
     }
 
     private void getCorrectUserAnswer(@NotNull Scanner sc) {
 
+
         while (true) {
+
             try {
+
                 String input = sc.next();
+
                 if (input.equals("a") || input.equals("b") || input.equals("c")) {
+
                     studentAnswers.add(numb++ + input);
                     return;
                 }
+
                 System.out.println("Iveskite pateikta varianta");
                 sc.nextLine();
 
@@ -163,10 +177,12 @@ public class AllInOne {
 
             while ((line = br.readLine()) != null) {
                 trueAnswers.add(line);
+
             }
 
         } catch (IOException e) {
             System.out.println("Klaida eiluciu nuskaityme: " + e);
+
         }
 
         System.out.println("Teisingi atsakymai: " + trueAnswers);
@@ -174,7 +190,7 @@ public class AllInOne {
 
     }
 
-    private void testResult() {
+    public void testResult() {
         readLinesFromAnswersFile();
         String[] array1 = studentAnswers.toArray(new String[0]);
         String[] array2 = trueAnswers.toArray(new String[0]);
@@ -186,15 +202,18 @@ public class AllInOne {
         }
         System.out.println("Jusu testo ivertinimas: " + count);
 
+
     }
 
     public void usersWriter() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        try {
-            mapper.writeValue(file, users);
 
-            System.out.println(users);   // sitas atspausdina eilute su uzpildytu useriu
+        try {
+         //   mapper.writeValue(file, users);
+            mapper.writeValue(file, List.of(users, "Student answers: " + studentAnswers));
+
+           System.out.println(users);   // sitas atspausdina eilute su uzpildytu useriu
             System.out.println("---------Ivyko irasymas userio-------");
 
         } catch (IOException e) {
@@ -211,7 +230,7 @@ public class AllInOne {
     }
 
     public void printOut() throws IOException {
-        serializationMethod();
+      //  serializationMethod();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -223,8 +242,8 @@ public class AllInOne {
         User readValue = mapper.readValue(file, User.class);
         String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
 
-        System.out.println(stringUser);
-        System.out.println(mapper);
+        System.out.println("String user sout: " +stringUser);
+        System.out.println("mapper sout: " +mapper);
 
         //-------
 
@@ -254,60 +273,61 @@ public class AllInOne {
 ////
 //        System.out.println("aaaaaaa" + mapper.writeValueAsString(readValue));
 
-        //      Map<String, Object> map = mapper.readValue(stringUser, new TypeReference<>() {
-        //      });
-        //      System.out.println(map.get("netikrasVardas"));
-        //       System.out.println(map.get("kitaPavarde"));
-    }
-
-    private void findStudent(Scanner sc) throws NullPointerException {
-
-//        System.out.printf("Iveskite testo ID:%n");
-//        String tId = sc.nextLine();
-        System.out.printf("Iveskite studento ID:%n");
-        String id = sc.nextLine();
-        User us = users.get(id);  // TODO: 2023-02-06
-
-        if (id.equals("33")) {   // todo reikia daryt
-            try {
-                // serializationMethod();
-                printOut();
-                System.out.println("blablabla");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.printf("Tvarka, leidziu atidaryt faila%n");
-
-        } else
-            System.out.printf("Tokio studento pagal paduota id: %s nera! %n%n", id);
+              Map<String, Object> map = mapper.readValue(stringUser, new TypeReference<>() {
+              });
+              System.out.println("Jusu atsakymai: " + studentAnswers);
 
     }
+
+//    private void findStudent() throws NullPointerException, IOException {
+//
+////        System.out.printf("Iveskite testo ID:%n");
+////        String tId = sc.nextLine();
+//        System.out.printf("Iveskite studento ID:%n");
+//        String id = sc.nextLine();
+//        //  User us = users.get(id);  // TODO: 2023-02-06
+//
+//        if (id.equals())) {   // todo reikia daryt
+//            try {
+//                // serializationMethod();
+//                printOut();
+//                System.out.println("Toks studentas yra, duodu rezultatus");
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            System.out.printf("Tvarka, leidziu atidaryt faila%n");
+//
+//        } else
+//            System.out.printf("Tokio studento pagal paduota id: %s nera! %n%n", id);
+//
+//    }
 
     public void serializationMethod() throws IOException {
         //  usersWriter();  // salinti jei nepapildys duomenu jaujais useriais
         ObjectMapper objectMapper = new ObjectMapper();
-        //  ObjectMapper mapper = new ObjectMapper();
-        //   File file = new File("users_test.json");
+            //  ObjectMapper mapper = new ObjectMapper();
+             File file = new File("users_test.json");
         SimpleModule module = new SimpleModule();
         module.addSerializer(User.class, new UserSerializer());
         module.addDeserializer(User.class, new UserDeserializer());
 
         objectMapper.registerModule(module);
 
-        //   User user = new User("Andrius", "Baltrunas", "andrius@codeacedamy.lt");
+          User user = new User("Andrius", "Baltrunas", studentAnswers.toString());
         String json = objectMapper.writeValueAsString(file);
 
 
         System.out.println("Json ->>>>>" + json);
         System.out.println("Spausdinu faila:   " + file);
-//
-//        User deserializedUser = objectMapper.readValue(json, User.class);
-//        System.out.println(deserializedUser);
+        System.out.println("Spausdinu user:   " + user);
 
-//        User readValue = mapper.readValue(file, User.class);
-//        String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
-//
-//        System.out.println(stringUser);
+        User deserializedUser = objectMapper.readValue(json, User.class);
+        System.out.println(deserializedUser);
+
+        User readValue = objectMapper.readValue(file, User.class);
+        String stringUser = objectMapper.writeValueAsString(readValue); //veikia spausdinimas!!!
+
+        System.out.println(stringUser);
     }
 }
 

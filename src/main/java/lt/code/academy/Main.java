@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws NullPointerException, NumberFormatException, NoSuchElementException {
+    public static void main(String[] args) throws NullPointerException, NumberFormatException, NoSuchElementException, IOException {
 
         AllInOne all = new AllInOne();
         Scanner sc = new Scanner(System.in);
