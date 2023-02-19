@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.9">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users_test.json" beforeDir="false" />
-    </list>
+    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.10" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,7 +205,13 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1676816373813</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="Namu darbai testas v.10">
+      <created>1676824072734</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1676824072734</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,7 +264,8 @@
     <MESSAGE value="Namu darbai testas v.7 padarytas rezult skaiciavimas" />
     <MESSAGE value="Namu darbai testas v.8" />
     <MESSAGE value="Namu darbai testas v.9" />
-    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.9" />
+    <MESSAGE value="Namu darbai testas v.10" />
+    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.10" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
