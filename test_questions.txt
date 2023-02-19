@@ -1,4 +1,4 @@
-ID: 33
+33
 Tema: "IT zinios"
 
 1. Kas yra JAVA?:

@@ -1,4 +1,4 @@
-ID: 33
+33
 Tema: "IT zinios"
 
 1c
@@ -10,4 +10,4 @@ Tema: "IT zinios"
 7b
 8b
 9c
-10a
+10aLine Added on: Sat Feb 18 14:33:14 EET 2023

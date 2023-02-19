@@ -15,7 +15,21 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-record User(String name, String surname, String studentId)  {
+record User(
+        @JsonProperty ("studentId")
+        String studentId,
+        @JsonProperty ("name")
+        String name,
+        String surname,
+        String testID,
+        String testTime,
+        Object testResult,
+        Object testAnswers
+) {
+    @Override
+    public String studentId() {
+        return studentId;
+    }
 
     @Override
     public String name() {
@@ -28,19 +42,35 @@ record User(String name, String surname, String studentId)  {
     }
 
     @Override
-    public String studentId() {
-        return studentId;
+    public String testID() {
+        return testID;
     }
-
-    @Contract(pure = true)
 
     @Override
-    public @NotNull String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", studentId=" + studentId +
-                '}';
+    public String testTime() {
+        return testTime;
     }
 
+    @Override
+    public Object testResult() {
+        return testResult;
+    }
+
+    @Override
+    public Object testAnswers() {
+        return testAnswers;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "studentId='" + studentId + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", testID='" + testID + '\'' +
+                ", testTime='" + testTime + '\'' +
+                ", testResult=" + testResult +
+                ", testAnswers=" + testAnswers +
+                '}';
+    }
 }

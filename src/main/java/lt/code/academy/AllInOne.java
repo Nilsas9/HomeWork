@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -13,15 +12,16 @@ import java.util.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
-
 public class AllInOne {
-    private int numb = 1;
+    private final File file = new File("users_test.json");
     private final Map<String, User> users = new HashMap<>();
     private final ArrayList<String> studentAnswers = new ArrayList<>();
     private final ArrayList<String> trueAnswers = new ArrayList<>();
-    private final File file = new File("users_test.json");
+    private int numb = 1;
+    private String testID;
+    private String testName;
+    private int testCount;
+
 
     public void userSelection(Scanner sc, @NotNull String action) throws IOException {
 
@@ -51,17 +51,11 @@ public class AllInOne {
     }
 
 
+    public void userInput(Scanner scanner) throws IOException { //pakeiciau i void is objekto
 
+        studentAnswers.clear();
+        trueAnswers.clear();
 
-    public Object userInput(Scanner scanner) throws IOException {
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.out.println("Negaliu sukurti failo " + e.getMessage());
-            }
-        }
         String testBeginTime = dataTime();
 
         System.out.println("Iveskite studento ID");
@@ -82,18 +76,20 @@ public class AllInOne {
 
             System.out.printf("Saunu, pradedam testa:%nSprendimo pradzios laikas: %s %n", testBeginTime);
 
-
-            users.put("Test time: " + testBeginTime, new User(name, surname, studentId));
-
             readLinesFromQuestionFile();
-            usersWriter();
+
+            users.put(testName, new User(studentId, name, surname, testID, testBeginTime, testCount, studentAnswers));
+
+
+            usersWriter();  // todo tikrinu su irasymu
+
 
         } else if ((choise.equals("N") || choise.equals("n"))) {
             System.out.println("Tada dar pasimokykite");
 
         } else System.out.println("blogas pasirinkimas");
 
-        return users;  // todo cia pakeiciau is null i users
+        //return null;  // todo cia pakeiciau is null i users
     }
 
     public void readLinesFromQuestionFile() throws NoSuchElementException {
@@ -105,8 +101,12 @@ public class AllInOne {
 
             String testID = br.readLine();
             System.out.println(testID);
+            this.testID = testID;
+
             String testName = br.readLine();
+            this.testName = testName;
             System.out.println(testName);
+
             br.readLine();
             System.out.printf("%nPradekime:%n");
 
@@ -131,36 +131,29 @@ public class AllInOne {
         } catch (IOException e) {
             System.out.println("Klaida eiluciu nuskaityme");
         }
-        System.out.println(studentAnswers);
-
+        System.out.println("Jusu ivesti atsakymai: " + studentAnswers);
         testResult();
-        //System.out.printf("Baigete spresti testa, Jusu ivertinimas: %s%n");
+
 
     }
 
-    private void getCorrectUserAnswer(@NotNull Scanner sc) {
-
-
+    public void getCorrectUserAnswer(@NotNull Scanner sc) {
         while (true) {
-
             try {
-
                 String input = sc.next();
 
                 if (input.equals("a") || input.equals("b") || input.equals("c")) {
-
                     studentAnswers.add(numb++ + input);
                     return;
                 }
-
                 System.out.println("Iveskite pateikta varianta");
                 sc.nextLine();
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
+
     }
 
 
@@ -169,10 +162,8 @@ public class AllInOne {
         try (BufferedReader br = new BufferedReader(new FileReader("test_answers.txt"))) {
             String line;
 
-            String testID = br.readLine();
-            System.out.println(testID);
-            String testName = br.readLine();
-            System.out.println(testName);
+            br.readLine();
+            br.readLine();
             br.readLine();
 
             while ((line = br.readLine()) != null) {
@@ -200,26 +191,32 @@ public class AllInOne {
                 count += 1;
             }
         }
+
+        numb = 1;
+        testCount = count;
         System.out.println("Jusu testo ivertinimas: " + count);
-
-
     }
 
-    public void usersWriter() {
+
+    public void usersWriter() throws IOException {
+        //   serializationMethod();
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        try {
-         //   mapper.writeValue(file, users);
-            mapper.writeValue(file, List.of(users, "Student answers: " + studentAnswers));
+        if (file.exists()) {
 
-           System.out.println(users);   // sitas atspausdina eilute su uzpildytu useriu
+            mapper.writeValue(file, users);
+
+            System.out.println("Spausdinu users is userWriter" + users);   // sitas atspausdina eilute su uzpildytu useriu
             System.out.println("---------Ivyko irasymas userio-------");
 
+        } else try {
+            file.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     private @NotNull String dataTime() {
         LocalDateTime testTime = LocalDateTime.now();
@@ -230,7 +227,7 @@ public class AllInOne {
     }
 
     public void printOut() throws IOException {
-      //  serializationMethod();
+        //  serializationMethod();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -242,8 +239,8 @@ public class AllInOne {
         User readValue = mapper.readValue(file, User.class);
         String stringUser = mapper.writeValueAsString(readValue); //veikia spausdinimas!!!
 
-        System.out.println("String user sout: " +stringUser);
-        System.out.println("mapper sout: " +mapper);
+        System.out.println("String user sout: " + users);
+        System.out.println("mapper sout: " + mapper);
 
         //-------
 
@@ -273,9 +270,9 @@ public class AllInOne {
 ////
 //        System.out.println("aaaaaaa" + mapper.writeValueAsString(readValue));
 
-              Map<String, Object> map = mapper.readValue(stringUser, new TypeReference<>() {
-              });
-              System.out.println("Jusu atsakymai: " + studentAnswers);
+        Map<String, Object> map = mapper.readValue(stringUser, new TypeReference<>() {
+        });
+        System.out.println("Jusu atsakymai: " + studentAnswers);
 
     }
 
@@ -305,29 +302,29 @@ public class AllInOne {
     public void serializationMethod() throws IOException {
         //  usersWriter();  // salinti jei nepapildys duomenu jaujais useriais
         ObjectMapper objectMapper = new ObjectMapper();
-            //  ObjectMapper mapper = new ObjectMapper();
-             File file = new File("users_test.json");
+        //  ObjectMapper mapper = new ObjectMapper();
+        // File file = new File("users_test.json");
         SimpleModule module = new SimpleModule();
         module.addSerializer(User.class, new UserSerializer());
         module.addDeserializer(User.class, new UserDeserializer());
 
         objectMapper.registerModule(module);
 
-          User user = new User("Andrius", "Baltrunas", studentAnswers.toString());
-        String json = objectMapper.writeValueAsString(file);
+        // users = new User ();
+        String json = objectMapper.writeValueAsString(users);
 
 
         System.out.println("Json ->>>>>" + json);
-        System.out.println("Spausdinu faila:   " + file);
-        System.out.println("Spausdinu user:   " + user);
+
+        System.out.println("Spausdinu user:   " + users);
 
         User deserializedUser = objectMapper.readValue(json, User.class);
         System.out.println(deserializedUser);
 
-        User readValue = objectMapper.readValue(file, User.class);
-        String stringUser = objectMapper.writeValueAsString(readValue); //veikia spausdinimas!!!
-
-        System.out.println(stringUser);
+//        User readValue = objectMapper.readValue(file, User.class);
+//        String stringUser = objectMapper.writeValueAsString(readValue); //veikia spausdinimas!!!
+//
+//        System.out.println(stringUser);
     }
 }
 

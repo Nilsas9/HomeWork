@@ -16,13 +16,19 @@ public class UserDeserializer extends StdDeserializer<User> {
     @Override
     public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException, JacksonException {
+
         JsonNode jsonNode = jsonParser.getCodec().readTree(jsonParser);
 
         String name = getValue(jsonNode, "name");
         String surname = getValue(jsonNode, "surname");
         String studentId = getValue(jsonNode, "studentId");
+        String testID = getValue(jsonNode, "testID");
+        String testTime = getValue(jsonNode, "testTime");
+        Object testResult = getValue(jsonNode, "testResult");
+        Object testAnswers = getValue(jsonNode, "testAnswers");
 
-        return new User(name, surname, studentId);
+
+        return new User(studentId, name, surname, testID, testTime, testResult, testAnswers);
     }
 
     private String getValue(JsonNode jsonNode, String fieldName) {
