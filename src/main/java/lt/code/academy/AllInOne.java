@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AllInOne {
     private final File file = new File("users_test.json");
-    private final Map<String, User> users = new HashMap<>();
+    private Map<String, User> users = new HashMap<>();
     private final ArrayList<String> studentAnswers = new ArrayList<>();
     private final ArrayList<String> trueAnswers = new ArrayList<>();
     private int numb = 1;
@@ -23,7 +23,10 @@ public class AllInOne {
     private int testCount;
 
 
+
     public void userSelection(Scanner sc, @NotNull String action) throws IOException {
+
+        readUsersFile();
 
         switch (action) {
             case "1" -> {
@@ -61,7 +64,21 @@ public class AllInOne {
         System.out.println("Iveskite studento ID");
         String studentId = scanner.nextLine();
 
+        if (studentId.isEmpty()){
+            System.out.println("gggg");
+            return;
+        }
         //todo cia reikia padaryt, kad negaletu tas pats jungtis
+        User previous = users.get(studentId);
+
+        if (previous != null) {
+            LocalDateTime last = dataTimeFromString(previous.testTime());
+            if (last.plusDays(3).compareTo(LocalDateTime.now()) > 0) {
+                System.out.println("trys dienos");
+            }
+            return;
+        }
+
 
         System.out.println("Iveskite varda:");
         String name = scanner.nextLine();
@@ -78,7 +95,7 @@ public class AllInOne {
 
             readLinesFromQuestionFile();
 
-            users.put(testName, new User(studentId, name, surname, testID, testBeginTime, testCount, studentAnswers));
+            users.put(studentId, new User(studentId, name, surname, testID, testBeginTime, testCount, studentAnswers));
 
 
             usersWriter();  // todo tikrinu su irasymu
@@ -203,17 +220,33 @@ public class AllInOne {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        if (file.exists()) {
-
+        try {
             mapper.writeValue(file, users);
 
             System.out.println("Spausdinu users is userWriter" + users);   // sitas atspausdina eilute su uzpildytu useriu
             System.out.println("---------Ivyko irasymas userio-------");
 
-        } else try {
-            file.createNewFile();
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println(e);
+        }
+    }
+
+    public void readUsersFile() throws IOException {
+        //   serializationMethod();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            if (file.exists()) {
+
+                users = mapper.readValue(file, HashMap.class);
+
+                System.out.println("Skaitau faila:" + users);   // sitas atspausdina eilute su uzpildytu useriu
+
+            }
+        } catch (IOException ex) {
+
         }
     }
 
@@ -224,6 +257,12 @@ public class AllInOne {
         String fd = testTime.format(dtf);
         System.out.println(fd);
         return fd;
+    }
+
+    private @NotNull LocalDateTime dataTimeFromString(String string) {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        return LocalDateTime.parse(string, dtf);
     }
 
     public void printOut() throws IOException {
