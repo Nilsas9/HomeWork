@@ -1,0 +1,22 @@
+{
+  "11" : {
+    "studentId" : "11",
+    "name" : "Jonas",
+    "surname" : "Jonaitis",
+    "testID" : "33",
+    "testName" : "\"IT zinios\"",
+    "testTime" : "2023 02 20 01:53",
+    "testResult" : 2,
+    "testAnswers" : [ "1a", "2c", "3a", "4c", "5a", "6c", "7a", "8c", "9a", "10c" ]
+  },
+  "22" : {
+    "studentId" : "22",
+    "name" : "Petras",
+    "surname" : "Ivanauskas",
+    "testID" : "33",
+    "testName" : "\"IT zinios\"",
+    "testTime" : "2023 02 20 01:53",
+    "testResult" : 3,
+    "testAnswers" : [ "1b", "2c", "3b", "4c", "5b", "6c", "7b", "8c", "9b", "10c" ]
+  }
+}

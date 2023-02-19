@@ -1,19 +1,11 @@
 package lt.code.academy;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws NullPointerException, NumberFormatException, NoSuchElementException, IOException {
+    public static void main(String[] args) throws NullPointerException, NumberFormatException, NoSuchElementException, IOException, ClassCastException {
 
         AllInOne all = new AllInOne();
         Scanner sc = new Scanner(System.in);

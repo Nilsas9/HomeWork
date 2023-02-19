@@ -1,5 +1,5 @@
 33
-Tema: "IT zinios"
+"IT zinios"
 
 1. Kas yra JAVA?:
 a. Kava
