@@ -1,6 +1,6 @@
 package lt.code.academy;
 
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.jetbrains.annotations.NotNull;
-
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class AllInOne {
     private final File file = new File("user_test_results.json");
@@ -23,7 +26,7 @@ public class AllInOne {
     private int testCount;
 
 
-    public void userSelection(Scanner sc, @NotNull String action) {
+    public void userSelection(Scanner sc, @NotNull String action) throws IOException {
 
         if (!file.exists()) {
             try {
@@ -31,12 +34,12 @@ public class AllInOne {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
+        readUsersFile();
+
         switch (action) {
             case "1" -> {
                 try {
-                    readUsersFile();
                     userInput(sc);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
