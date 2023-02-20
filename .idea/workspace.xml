@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.11">
+    <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.1 baigta">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_test_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/user_test_results.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +236,13 @@
       <option name="presentableId" value="LOCAL−00016" />
       <updated>1676853733725</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="Namu darbai testas v.1 baigta">
+      <created>1676908668265</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1676908668265</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -292,7 +297,8 @@
     <MESSAGE value="Namu darbai testas v.9" />
     <MESSAGE value="Namu darbai testas v.10" />
     <MESSAGE value="Namu darbai testas v.11" />
-    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.11" />
+    <MESSAGE value="Namu darbai testas v.1 baigta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Namu darbai testas v.1 baigta" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

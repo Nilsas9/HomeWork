@@ -1,6 +1,5 @@
 package lt.code.academy;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
 public class AllInOne {
 
     private final File file = new File("user_test_results.json");
@@ -24,7 +22,6 @@ public class AllInOne {
     private String testID;
     private String testName;
     private int testCount;
-
 
     public void userSelection(Scanner sc, @NotNull String action) {
 
@@ -66,11 +63,11 @@ public class AllInOne {
         if (previous != null) {
             LocalDateTime last = dataTimeFromString(previous.testTime());
             if (last.plusDays(3).compareTo(LocalDateTime.now()) > 0) {
-                System.out.println("Testa bus galima perlaikyti tik po 3 dienu. Jus sprendete si testa: " + previous.testTime());
+                System.out.println("Testa bus galima perlaikyti tik po 3 dienu. " +
+                        "Jus sprendete si testa: " + previous.testTime());
                 return;
             }
         }
-
         System.out.println("Iveskite varda:");
         String name = scanner.nextLine();
         System.out.println("Iveskite pavarde:");
@@ -90,7 +87,9 @@ public class AllInOne {
         if (choise.equals("T") || choise.equals("t")) {
             System.out.printf("Saunu, pradedam testa:%nSprendimo pradzios laikas: %s %n", testBeginTime);
             readLinesFromQuestionFile();
-            users.put(studentId, new User(studentId, name, surname, testID, testName, testBeginTime, testCount, studentAnswers));
+            users.put(studentId, new User(studentId, name, surname, testID, testName,
+                    testBeginTime, testCount, studentAnswers));
+
             usersWriter();
 
         } else if ((choise.equals("N") || choise.equals("n"))) {
@@ -207,7 +206,7 @@ public class AllInOne {
         }
     }
 
-    public void readUsersFile()  {
+    public void readUsersFile() {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
