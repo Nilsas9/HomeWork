@@ -108,5 +108,15 @@
     "testTime" : "2023 02 20 17:48",
     "testResult" : 6,
     "testAnswers" : [ "1c", "2b", "3a", "4c", "5b", "6c", "7a", "8c", "9c", "10c" ]
+  },
+  "9" : {
+    "studentId" : "9",
+    "name" : "Viktoras ",
+    "surname" : "Ced",
+    "testID" : "33",
+    "testName" : "\"IT zinios\"",
+    "testTime" : "2023 02 20 18:43",
+    "testResult" : 1,
+    "testAnswers" : [ "1a", "2a", "3c", "4b", "5c", "6b", "7a", "8a", "9a", "10a" ]
   }
 }

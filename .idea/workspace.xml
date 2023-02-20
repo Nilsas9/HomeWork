@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="243ac578-2a2e-4add-9bd1-1ef8cd2feaaa" name="Changes" comment="Namu darbai testas v.1 baigta">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/AllInOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lt/code/academy/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_test_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/user_test_results.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +241,13 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1676908668265</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Namu darbai testas v.1 baigta">
+      <created>1676910843324</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1676910843324</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
