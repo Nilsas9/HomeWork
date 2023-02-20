@@ -1,21 +1,21 @@
 package lt.code.academy;
 
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+
 public class AllInOne {
+
     private final File file = new File("user_test_results.json");
     private Map<String, User> users = new HashMap<>();
     private final ArrayList<String> studentAnswers = new ArrayList<>();
@@ -26,7 +26,7 @@ public class AllInOne {
     private int testCount;
 
 
-    public void userSelection(Scanner sc, @NotNull String action) throws IOException {
+    public void userSelection(Scanner sc, @NotNull String action) {
 
         if (!file.exists()) {
             try {
@@ -67,9 +67,10 @@ public class AllInOne {
             LocalDateTime last = dataTimeFromString(previous.testTime());
             if (last.plusDays(3).compareTo(LocalDateTime.now()) > 0) {
                 System.out.println("Testa bus galima perlaikyti tik po 3 dienu. Jus sprendete si testa: " + previous.testTime());
+                return;
             }
-            return;
         }
+
         System.out.println("Iveskite varda:");
         String name = scanner.nextLine();
         System.out.println("Iveskite pavarde:");
@@ -101,7 +102,6 @@ public class AllInOne {
     public void readLinesFromQuestionFile() throws NoSuchElementException {
         Scanner scanner = new Scanner(System.in);
         String line;
-
 
         try (BufferedReader br = new BufferedReader(new FileReader("test_questions.txt"))) {
 
@@ -139,8 +139,6 @@ public class AllInOne {
         }
         //System.out.println("Jusu ivesti atsakymai: " + studentAnswers);
         testResult();
-
-
     }
 
     public void getCorrectUserAnswer(@NotNull Scanner sc) {
@@ -159,9 +157,7 @@ public class AllInOne {
                 throw new RuntimeException(e);
             }
         }
-
     }
-
 
     public void readLinesFromAnswersFile() {
 
@@ -174,17 +170,11 @@ public class AllInOne {
 
             while ((line = br.readLine()) != null) {
                 trueAnswers.add(line);
-
             }
-
         } catch (IOException e) {
             System.out.println("Klaida eiluciu nuskaityme: " + e);
-
         }
-
         //  System.out.println("Teisingi atsakymai: " + trueAnswers);
-
-
     }
 
     public void testResult() {
@@ -198,7 +188,6 @@ public class AllInOne {
                 count += 1;
             }
         }
-
         numb = 1;
         testCount = count;
         // System.out.println("Jusu testo ivertinimas: " + count);
@@ -218,22 +207,24 @@ public class AllInOne {
         }
     }
 
-    public void readUsersFile() throws IOException {
+    public void readUsersFile()  {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         try {
             if (file.exists()) {
-
-                users = mapper.readValue(file, HashMap.class);
-
+                users = mapper.readValue(file, new TypeReference<>() {
+                    @Override
+                    public int compareTo(TypeReference<Map<String, User>> o) {
+                        return super.compareTo(o);
+                    }
+                });
             }
         } catch (IOException ignored) {
 
         }
     }
-
 
     private @NotNull String dataTime() {
         LocalDateTime testTime = LocalDateTime.now();
@@ -244,11 +235,9 @@ public class AllInOne {
     }
 
     private @NotNull LocalDateTime dataTimeFromString(String string) {
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         return LocalDateTime.parse(string, dtf);
     }
-
 }
 
 
